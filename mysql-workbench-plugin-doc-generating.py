@@ -18,7 +18,7 @@ def documentation(diagram):
 
     
     for figure in diagram.figures:
-        if figure.table:
+        if hasattr(figure, "table") and figure.table:
             text += writeTableDoc(figure.table)
 
     mforms.Utilities.set_clipboard_text(text)
