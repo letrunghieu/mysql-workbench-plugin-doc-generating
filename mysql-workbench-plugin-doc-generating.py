@@ -19,7 +19,7 @@ def documentation(catalog):
     for table in schema.tables:
         text += writeTableDoc(table)
         for column in table.columns:
-            text += writeColumnDoc(column)
+            text += writeColumnDoc(column, table)
         text += "\n\n"
 
     print text
@@ -36,16 +36,62 @@ def writeTableDoc(table):
     text += "**Columns:**\n\n"
 
 
-    text += "|Column|Data type|Description\n|-|-|-|\n"
+    text += "|Column|Data type|Attributes|Default|Description\n|-|-|-|-|-|\n"
     return text
 
 
-def writeColumnDoc(column):
-    text = "|`" + column.name + "`|" + column.simpleType.name
+def writeColumnDoc(column, table):
+    # column name
+    text = "|`" + column.name
 
+    # column type name
+    text += "`|" + column.simpleType.name
+
+    # column max lenght if any
     if column.length != -1:
         text += "(" + str(column.length) + ")"
 
+    text += "|"
+
+    # column attributes
+    attribs = [];
+
+    isPrimary = False;
+    isUnique = False;
+    for index in table.indices:
+        if index.indexType == "PRIMARY":
+            for c in index.columns:
+                if c.referencedColumn.name == column.name:
+                    isPrimary = True
+                    break
+        if index.indexType == "UNIQUE":
+            for c in index.columns:
+                if c.referencedColumn.name == column.name:
+                    isUnique = True
+                    break
+
+    # primary?
+    if isPrimary:
+        attribs.append("PRIMARY")
+
+    # auto increment?
+    if column.autoIncrement == 1:
+        attribs.append("Auto increments")
+
+    # not null?
+    if column.isNotNull == 1:
+        attribs.append("Not null")
+
+    # unique?
+    if isUnique:
+        attribs.append("Unique")
+
+    text += ", ".join(attribs)
+
+    # column default value
+    text += "|" + (("`" + column.defaultValue + "`") if column.defaultValue else " ")
+
+    # column description
     text += "|" + (nl2br(column.comment) if column.comment else "*no description*") +  "|" + "\n"
     return text
 
