@@ -13,6 +13,8 @@ A Python script to generate documentation from MySQL Workbench ERR diagram.
 
 ## Usage
 
+An example output of the [`sakila`](https://dev.mysql.com/doc/sakila/en/) database can be found at [sakila_output.md](sakila_output.md).
+
 ### Generate documentation from ERR digram
 
 * Open the ERR digram
