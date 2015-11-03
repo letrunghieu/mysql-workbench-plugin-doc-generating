@@ -36,7 +36,7 @@ def writeTableDoc(table):
 
     text += "###Columns: \n\n"
 
-    text += "|Column|Data type|Attributes|Default|Description\n|-|-|-|-|-|\n"
+    text += "| Column | Data type | Attributes | Default | Description |\n| --- | --- | --- | --- | ---  |\n"
 
     for column in table.columns:
         text += writeColumnDoc(column, table)
@@ -46,7 +46,7 @@ def writeTableDoc(table):
     if (len(table.indices)):
         text += "### Indices: \n\n"
 
-        text += "|Name|Columns|Type|Description\n|-|-|-|-|\n"
+        text += "| Name | Columns | Type | Description |\n| --- | --- | --- | --- |\n"
 
         for index in table.indices:
             text += writeIndexDoc(index)
@@ -58,20 +58,20 @@ def writeTableDoc(table):
 
 def writeColumnDoc(column, table):
     # column name
-    text = "|`" + column.name + "`"
+    text = "| `" + column.name + "`"
 
     # column type name
     if column.simpleType:
-        text += "|" + column.simpleType.name
+        text += " | " + column.simpleType.name
         # column max lenght if any
         if column.length != -1:
             text += "(" + str(column.length) + ")"
     else:
-        text += "| "
+        text += " | "
 
     
 
-    text += "|"
+    text += " | "
 
     # column attributes
     attribs = [];
@@ -109,10 +109,10 @@ def writeColumnDoc(column, table):
     text += ", ".join(attribs)
 
     # column default value
-    text += "|" + (("`" + column.defaultValue + "`") if column.defaultValue else " ")
+    text += " | " + (("`" + column.defaultValue + "`") if column.defaultValue else " ")
 
     # column description
-    text += "|" + (nl2br(column.comment) if column.comment else " ")
+    text += " | " + (nl2br(column.comment) if column.comment else " ")
 
     # foreign key
     for fk in table.foreignKeys:
@@ -122,25 +122,25 @@ def writeColumnDoc(column, table):
 
 
     # finish
-    text  +=  "|" + "\n"
+    text  +=  " |" + "\n"
     return text
 
 def writeIndexDoc(index):
 
     # index name
-    text = "|" + index.name
+    text = "| " + index.name
 
     # index columns
-    text += "|" + ", ".join(map(lambda x: "`" + x.referencedColumn.name + "`", index.columns))
+    text += " | " + ", ".join(map(lambda x: "`" + x.referencedColumn.name + "`", index.columns))
 
     # index type
-    text += "|" + index.indexType
+    text += " | " + index.indexType
 
     # index description
-    text += "|" + (nl2br(index.comment) if index.comment else " ")
+    text += " | " + (nl2br(index.comment) if index.comment else " ")
 
     # finish
-    text += "|\n"
+    text += " |\n"
 
     return text
 
