@@ -62,14 +62,9 @@ def writeColumnDoc(column, table):
     text = "| `" + column.name + "`"
 
     # column type name
-    if column.simpleType:
-        # column max lenght if any
-        if column.length != -1:
-            text += " | " + column.simpleType.name
-            text += "(" + str(column.length) + ")"
-        else:
-            #use raw formatted
-            text += " | " + column.formattedRawType
+    if column.formattedRawType:
+        #use raw formatted
+        text += " | " + column.formattedRawType
     else:
         text += " | "
 
