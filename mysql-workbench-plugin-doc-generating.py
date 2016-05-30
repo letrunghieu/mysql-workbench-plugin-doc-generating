@@ -63,10 +63,13 @@ def writeColumnDoc(column, table):
 
     # column type name
     if column.simpleType:
-        text += " | " + column.simpleType.name
         # column max lenght if any
         if column.length != -1:
+            text += " | " + column.simpleType.name
             text += "(" + str(column.length) + ")"
+        else:
+            #use raw formatted
+            text += " | " + column.formattedRawType
     else:
         text += " | "
 
