@@ -1,6 +1,7 @@
 # MySQL Workbench Model Document Generation
 
-A Python script to generate documentation from MySQL Workbench ERR diagram.
+Un script Python pour générer de la documentation à partir du diagramme MySQL Workbench EER.
+### Version française.
 
 ## Installation
 
