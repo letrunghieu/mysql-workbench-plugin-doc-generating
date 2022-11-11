@@ -24,7 +24,7 @@ def documentation(diagram):
     mforms.Utilities.set_clipboard_text(text)
     mforms.App.get().set_status_text("Documentation generated into the clipboard. Paste it to your editor.")
 
-    print "Documentation is copied to the clipboard."
+    print("Documentation is copied to the clipboard.")
     return 0
 
 def writeTableDoc(table):
